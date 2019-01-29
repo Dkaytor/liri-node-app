@@ -10,17 +10,18 @@ var artist = process.argv[3];
 var spotify = new Spotify(keys.spotify);
 
 
-axios.get("https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp")
-  .then(function (response) {
-    if (command === "concert-this") {
 
+    if (command === "concert-this") {
+      axios.get("https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp")
+     .then(function (response) {
       for (i = 0; i < response.data.length; i++) {
         console.log(" The name of the venue is: " + response.data[i].venue.name);
         console.log(" The location is: " + response.data[i].venue.city);
         console.log(" The date is: " + moment(response.data[i].datetime).format('MM/DD/YYYY'));
         console.log("\n-----------------\n");
-      }
-    }
+      }//ends for loop on 17
+    })//ends first.then on 14
+    }// ends if concert-this on 15
 
     else if (command === "spotify-this-song") {
       if (artist === undefined) {
@@ -96,17 +97,18 @@ axios.get("https://rest.bandsintown.com/artists/" + artist + "/events?app_id=cod
       fs.readFile("random.txt", "utf8", function (error, info) {
         var command = info.split(/,(.+)/)[0];
         var artist = info.split(/,(.+)/)[1];
+        artist = artist.replace("\"","");
 
-        axios.get("https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp")
-          .then(function (response) {
             if (command === "concert-this") {
-
+              axios.get("https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp")
+          .then(function (response) {
               for (i = 0; i < response.data.length; i++) {
                 console.log(" The name of the venue is: " + response.data[i].venue.name);
                 console.log(" The location is: " + response.data[i].venue.city);
                 console.log(" The date is: " + moment(response.data[i].datetime).format('MM/DD/YYYY'));
                 console.log("\n-----------------\n");
-              }
+              }//ends for loop on 104
+            });//ends .then on 101
             }
 
 
@@ -181,12 +183,9 @@ axios.get("https://rest.bandsintown.com/artists/" + artist + "/events?app_id=cod
             }// ends movie command on 148
 
 
-          });//ends .then on 101
-
-
       });//ends read file on 96
 
     }//ends do what it says command on 95
 
-  })//ends first.then on 14
+
 
